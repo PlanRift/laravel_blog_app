@@ -15,8 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = DB::table('posts')->select('title')->get();
-        dd($posts);
+        $posts = DB::table('posts')->get();
 
         $data = [
             'posts' => $posts
@@ -64,16 +63,10 @@ class PostController extends Controller
     public function show($id)
     {
 
-        $posts = Storage::get('posts.txt');
-        $posts = explode("\n", $posts);
-        $selected_post = array();
-
-        foreach ($posts as $p) {
-            $p = explode(",", $p);
-            if ($p[0] == $id) {
-                $selected_post = $p;
-            }
-        }
+        $selected_post = DB::table('posts')
+            ->select('id', 'title', 'content', 'created_at')
+            ->where('id', $id)
+            ->first();
 
         $data = [
             'post' => $selected_post
@@ -91,7 +84,17 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        echo "ini adalah halaman edit data dari idn = $id";
+        $selected_post = DB::table('posts')
+            ->select('id', 'title', 'content', 'created_at')
+            ->where('id', $id)
+            ->first();
+
+        $data = [
+            'post' => $selected_post
+        ];
+
+
+        return view('posts.edit', $data);
     }
 
     /**
