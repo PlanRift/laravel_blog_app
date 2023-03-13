@@ -15,8 +15,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Storage::get('posts.txt');
-        $posts = explode("\n", $posts);
+        $posts = DB::table('posts')->select('title')->get();
+        dd($posts);
 
         $data = [
             'posts' => $posts
@@ -47,7 +47,9 @@ class PostController extends Controller
 
         DB::table('posts')->insert([
             'title' => $title,
-            'content' => $content
+            'content' => $content,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
         ]);
 
         return redirect('posts');
