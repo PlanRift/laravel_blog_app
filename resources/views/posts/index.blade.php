@@ -27,15 +27,15 @@
         </h1>
 
         @foreach($posts as $p)
-        @php($p = explode(",", $p))
 
         <div class="card my-4">
             <div class="card-body">
-                <h5 class="card-title">{{ $p[1] }}</h5>
-                <p class="card-text">{{ $p[2] }}</p>
-                <p class="card-text"><small class="text-muted">Created At {{ date("d M Y H:i", strtotime($p[3])) }}
+                <h5 class="card-title">{{ $p->title }}</h5>
+                <p class="card-text">{{ $p->content }}</p>
+                <p class="card-text"><small class="text-muted">Created At {{ date("d M Y H:i", strtotime($p->created_at)) }}
                     </small> </p>
-                <a href="{{ url("posts/$p[0]") }}" class="btn btn-primary">Selengkapnya</a>
+                <a href="{{ url("posts/$p->id") }}" class="btn btn-primary">Selengkapnya</a>
+                <a href="{{ url("posts/$p->id/edit") }}" class="btn btn-warning">Edit</a>
             </div>
         </div>
 
@@ -46,7 +46,6 @@
     <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js')}}"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
     </script>
-</body>
 </body>
 
 </html>

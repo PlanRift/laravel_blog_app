@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Post</title>
+    <title>{{ $post->title }}</title>
 
     <!-- css bootstrap local -->
     <link href="{{ asset('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet"
@@ -19,9 +19,9 @@
     <div class="container">
 
         <article class="blog-post mt-5">
-            <h2 class="blog-post-title mb-1">{{ $post[1] }}</h2>
-            <p class="blog-post-meta">{{ date('d M Y H:i', strtotime($post[3]))  }}</p>
-            <p> {{ $post[2] }}</p>
+            <h2 class="blog-post-title mb-1">{{ $post->title }}</h2>
+            <p class="blog-post-meta">{{ date('d M Y H:i', strtotime($post->created_at))  }}</p>
+            <p> {{ $post->content }}</p>
 
         </article>
 
