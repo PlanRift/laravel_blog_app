@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -45,12 +45,9 @@ class PostController extends Controller
         $title = $request->input('title');
         $content = $request->input('content');
 
-
         DB::table('posts')->insert([
             'title' => $title,
-            'content' => $content,
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
+            'content' => $content
         ]);
 
         return redirect('posts');
