@@ -15,7 +15,7 @@
     <div class="container">
         <h1 class="my-4">Edit Postingan</h1>
 
-        <form method="post" action="{{ url("posts/{$post->id}") }}">
+        <form method="post" action="{{ url("posts/$post->id") }}">
             @method('patch')
             @csrf
             <div class="mb-3">
@@ -27,9 +27,15 @@
                 <textarea class="form-control" id="content" rows="3" name="content" value="{{ $post->content }}" required>{{ $post->content }}</textarea>
             </div>
             <button type="submit" class="btn btn-primary">Simpan</button>
-
+            <form method="post" action="{{ url("posts/$post->id") }}">
+                    @method('DELETE')
+                    @csrf
+                        <button type="submit" class="btn btn-danger">Hapus</button>
+                </form>
         </form>
-
+        
+        <!-- delete form -->
+    
 
     </div>
 
