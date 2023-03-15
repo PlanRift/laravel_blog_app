@@ -24,6 +24,8 @@
     <div class="container my-4">
         <h1>
             Blog-Ku <a href="{{ url('posts/create') }}" class="btn btn-warning">+ Buat Post</a>
+
+            <a href="{{ url('posts/trash') }}" class="btn btn-danger">Riwayat Hapus</a>
         </h1>
 
         @foreach($posts as $p)
