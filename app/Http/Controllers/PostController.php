@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -15,7 +16,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = DB::table('posts')->get();
+        $posts = Post::active()
+        ->get();
 
         $data = [
             'posts' => $posts
@@ -63,10 +65,7 @@ class PostController extends Controller
     public function show($id)
     {
 
-        $selected_post = DB::table('posts')
-            ->select('id', 'title', 'content', 'created_at')
-            ->where('id', $id)
-            ->first();
+        $selected_post = Post::selectById($id)->first();
 
         $data = [
             'post' => $selected_post
@@ -110,8 +109,7 @@ class PostController extends Controller
         $content = $request->input('content');
 
         // ? "UPDATE .... Where id = $id"
-        DB::table('posts')
-            ->where('id', $id)
+        Post::selectById($id)
             ->update([
                 'title' => $title,
                 'content' => $content,
@@ -131,10 +129,19 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('posts')
-            ->where('id', $id)
+        Post::selectById($id)
             ->delete();
 
             return redirect('posts');
+    }
+
+    public function trash(){
+        $trash_item = Post::onlyTrashed()->get();
+
+        $data = [
+            'posts' => $trash_item
+        ];
+
+        return view('posts.recyclebin', $data);
     }
 }
