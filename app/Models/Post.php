@@ -11,6 +11,10 @@ class Post extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $fillable = [
+        'title',
+        'content',
+    ];
     
     public function scopeActive($query){
         return $query->where('active', true);
@@ -19,4 +23,15 @@ class Post extends Model
     public function scopeSelectById($query, $id){
         return $query->where('id', $id );
     }
+
+    
+
+    public static function boot(){
+        parent::boot();
+
+        static::creating(function($post) {
+            $post->slug = str_replace('?', '-', $post->title);
+        });
+    }
 }
+
