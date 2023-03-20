@@ -30,7 +30,7 @@ class Post extends Model
         parent::boot();
 
         static::creating(function($post) {
-            $post->slug = str_replace('?', '-', $post->title);
+            $post->slug = preg_replace('/[^A-Za-z0-9-]+/', '-', $post->title);
         });
     }
 }

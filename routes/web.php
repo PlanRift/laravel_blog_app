@@ -35,7 +35,7 @@ Route::get('posts/trash',[PostController::class, 'trash']);
 Route::get('posts/{slug}', [PostController::class, 'show']);
 Route::post('posts', [PostController::class, 'store']);
 
-Route::get('posts/{id}/edit', [PostController::class, 'edit']);
+Route::get('posts/{slug}/edit', [PostController::class, 'edit']);
 Route::patch('posts/{slug}', [PostController::class, 'update']);
 
 Route::delete('posts/{id}', [PostController::class, 'destroy']);

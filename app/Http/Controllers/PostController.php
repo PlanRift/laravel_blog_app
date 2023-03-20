@@ -60,7 +60,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug,)
+    public function show($slug)
     {
 
         $selected_post = Post::where('slug', $slug)->first();
@@ -81,12 +81,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        $selected_post = DB::table('posts')
-            ->select('id', 'title', 'content', 'created_at')
-            ->where('id', $id)
-            ->first();
+        $selected_post = Post::where('slug', $slug)->first();
 
         $data = [
             'post' => $selected_post
@@ -103,20 +100,19 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
         $title = $request->input('title');
         $content = $request->input('content');
 
         // ? "UPDATE .... Where id = $id"
-        Post::selectById($id)
+        Post::where('slug', $slug)
             ->update([
                 'title' => $title,
                 'content' => $content,
-                'updated_at' => date("Y-m-d H:i:s")
             ]);
             
-            return redirect("posts/{$id}");
+            return redirect("posts/{$slug}");
         
 
     }

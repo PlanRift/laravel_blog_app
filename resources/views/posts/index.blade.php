@@ -37,7 +37,7 @@
                 <p class="card-text"><small class="text-muted">Created At {{ date("d M Y H:i", strtotime($p->created_at)) }}
                     </small> </p>
                 <a href="{{ url("posts/$p->slug") }}" class="btn btn-primary">Selengkapnya</a>
-                <a href="{{ url("posts/$p->id/edit") }}" class="btn btn-warning">Edit</a>
+                <a href="{{ url("posts/$p->slug/edit") }}" class="btn btn-warning">Edit</a>
             </div>
         </div>
 
