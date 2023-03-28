@@ -18,8 +18,13 @@
             </form>
 
             <div class="text-end">
+                @if(!Auth::check())
                 <a href="{{ url("login")}}" class="btn btn-outline-light me-2">Login</a>
-                <a href="{{ url("login")}}" class="btn btn-warning">Sign-up</a>
+                <a href="{{ url("register")}}" class="btn btn-outline-light me-2">Register</a>
+                @else()
+                <a href="#" class="btn btn-outline-light me-2">{{ Auth::user()->name}}</a>
+                <a href="{{ url("logout")}}" class="btn btn-warning">Log-out</a>
+                @endif
             </div>
         </div>
     </div>
