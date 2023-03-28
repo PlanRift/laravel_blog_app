@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -16,8 +17,13 @@ class PostController extends Controller
      */
     public function index()
     {
+
+        if (!Auth::check()) {
+            return redirect('login');
+        }
+
         $posts = Post::active()
-        ->get();
+            ->get();
 
         $data = [
             'posts' => $posts
@@ -32,6 +38,9 @@ class PostController extends Controller
      */
     public function create()
     {
+        if (!Auth::check()) {
+            return redirect('login');
+        }
         return view('posts.create');
     }
 
@@ -43,6 +52,9 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect('login');
+        }
         $title = $request->input('title');
         $content = $request->input('content');
 
@@ -62,7 +74,9 @@ class PostController extends Controller
      */
     public function show($slug)
     {
-
+        if (!Auth::check()) {
+            return redirect('login');
+        }
         $selected_post = Post::where('slug', $slug)->first();
 
 
@@ -83,6 +97,9 @@ class PostController extends Controller
      */
     public function edit($slug)
     {
+        if (!Auth::check()) {
+            return redirect('login');
+        }
         $selected_post = Post::where('slug', $slug)->first();
 
         $data = [
@@ -102,6 +119,9 @@ class PostController extends Controller
      */
     public function update(Request $request, $slug)
     {
+        if (!Auth::check()) {
+            return redirect('login');
+        }
         $title = $request->input('title');
         $content = $request->input('content');
 
@@ -111,10 +131,8 @@ class PostController extends Controller
                 'title' => $title,
                 'content' => $content,
             ]);
-            
-            return redirect("posts/{$slug}");
-        
 
+        return redirect("posts/{$slug}");
     }
 
     /**
@@ -125,13 +143,20 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
+        if (!Auth::check()) {
+            return redirect('login');
+        }
         Post::selectById($id)
             ->delete();
 
-            return redirect('posts');
+        return redirect('posts');
     }
 
-    public function trash(){
+    public function trash()
+    {
+        if (!Auth::check()) {
+            return redirect('login');
+        }
         $trash_item = Post::onlyTrashed()->get();
 
         $data = [
